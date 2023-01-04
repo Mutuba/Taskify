@@ -5,6 +5,6 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version : 3.0.2
-* Rails Version version : 7
+* Ruby version: 3.0.2
+* Rails Version version: 7
 
