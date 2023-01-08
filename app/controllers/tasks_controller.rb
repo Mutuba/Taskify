@@ -25,11 +25,15 @@ class TasksController < ApplicationController
     render json: { message: 'Success' }
   end
 
+  def edit
+    @task = Task.find(params[:id])
+  end
+
   def update
     @task = Task.find(params[:id])
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to tasks_url, notice: "Task was successfully updated" }
+        format.html { redirect_to tasks_url, notice: 'Task was successfully updated' }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -39,9 +43,8 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    redirect_to tasks_url, notice: "Post was successfully deleted."
+    redirect_to tasks_url, notice: 'Post was successfully deleted.'
   end
-
 
   private
 
