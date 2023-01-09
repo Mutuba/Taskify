@@ -20,9 +20,12 @@ class TasksController < ApplicationController
 
   def toggle
     @task = Task.find(params[:id])
-    @task.update!(completed: params[:completed])
+    puts "Mutuba #{params}"
 
-    render json: { message: 'Success' }
+    # @task.update!(completed: params[:completed])
+
+    # render json: { message: 'Success' }
+    redirect_to tasks_url, notice: 'Post was successfully completed.'
   end
 
   def edit
