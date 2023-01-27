@@ -20,7 +20,6 @@ class TasksController < ApplicationController
 
   def toggle
     @task = Task.find(params[:id])
-    puts "Mutuba #{params}"
 
     # @task.update!(completed: params[:completed])
 
