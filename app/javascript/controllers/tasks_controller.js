@@ -19,10 +19,13 @@ export default class extends Controller {
         "Content-Type": "application/json",
         "X-CSRF-Token": csrfToken,
       },
-      body: JSON.stringify({ completed: e.target.checked }), // body data type must match "Content-Type" header
-    }).then((response) => response.json());
-    // .then((data) => {
-    //   alert(data.message);
-    // });
+      body: JSON.stringify({ completed: e.target.checked }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // alert(data.message);
+        const noticeFrame = document.querySelector("#notice-frame");
+        TurboStreams.append(noticeFrame, data.html);
+      });
   }
 }
