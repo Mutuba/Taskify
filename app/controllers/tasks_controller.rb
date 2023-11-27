@@ -20,18 +20,13 @@ class TasksController < ApplicationController
 
   def toggle
     @task = Task.find(params[:id])
-
-    # @task.update!(completed: params[:completed])
-
-    # render json: { message: 'Success' }
-
-    @task.update!(completed: params[:completed])
-
+      
     respond_to do |format|
-      format.turbo_stream do
-        turbo_stream.append :notice, partial: "shared/notice", locals: { message: "Task was successfully updated" }
+      if @task.update!(completed: params[:completed])
+        format.html { redirect_to tasks_url, notice: 'Task was successfully updated' }
+      else
+        format.html { redirect_to tasks_url, notice: @task.errors.full_messages }    
       end
-      format.json { render json: { message: 'Success' } }
     end
   end
 
