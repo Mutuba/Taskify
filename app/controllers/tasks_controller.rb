@@ -4,28 +4,32 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.all.order(updated_at: :desc)
     @task = Task.new
+
   end
 
   def create
     @task = Task.new(task_params)
-
+  
     respond_to do |format|
       if @task.save
-        format.html { redirect_to tasks_url, notice: 'Task was successfully created' }
+        format.turbo_stream { render turbo_stream: turbo_stream.prepend(:tasks, partial: "tasks/task", locals: { task: @task }) }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
+  
 
   def toggle
     @task = Task.find(params[:id])
-      
     respond_to do |format|
-      if @task.update!(completed: params[:completed])
-        format.html { redirect_to tasks_url, notice: 'Task was successfully updated' }
+      if @task.update(completed: params[:completed])
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(@task, partial: "tasks/task", locals: { task: @task })
+        }
+        format.json { render json: { message: "Task was successfully updated"} }
       else
-        format.html { redirect_to tasks_url, notice: @task.errors.full_messages }    
+        format.html { redirect_to tasks_url, alert: @task.errors.full_messages.join(", ") }
       end
     end
   end
@@ -38,17 +42,22 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to tasks_url, notice: 'Task was successfully updated' }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(@task, partial: "tasks/task", locals: { task: @task }) }
+        format.json { render json: { message: 'Task was successfully updated' } }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
     end
   end
+  
 
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    redirect_to tasks_url, notice: 'Post was successfully deleted.'
+
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@task) }
+    end
   end
 
   private
