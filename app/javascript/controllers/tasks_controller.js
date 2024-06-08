@@ -22,11 +22,10 @@ export default class extends Controller {
       },
       body: JSON.stringify({ completed: e.target.checked }),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          return response.json().then((data) => {
-            throw new Error(data.errors.join(", "));
-          });
+          const data = await response.json();
+          throw new Error(data.errors.join(", "));
         }
         return response.json();
       })
