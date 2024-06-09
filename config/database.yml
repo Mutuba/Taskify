@@ -16,7 +16,4 @@ test:
 
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
-  database: taskify_production
-  username: taskify
-  password: <%= ENV['TASKIFY_DATABASE_PASSWORD'] %>
+  url: <%= ENV["DATABASE_URL"] %>
