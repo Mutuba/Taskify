@@ -29,7 +29,7 @@ Clone the app
 
 With SSH
 
-`git@github.com:Mutuba/Appointment.git`
+`git@github.com:Mutuba/Taskify.git`
 
 - With HTTPS
 
