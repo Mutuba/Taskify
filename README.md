@@ -33,7 +33,7 @@ With SSH
 
 - With HTTPS
 
-`https://github.com/Mutuba/Appointment.git`
+`https://github.com/Mutuba/Taskify.git`
 
 Move into the directory and install all the requirements.
 
